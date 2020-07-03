@@ -38,7 +38,7 @@ def differential_manchester():
 
 if __name__ == "__main__":    
     while True:
-        print("Enter the bit sequence separating the bits with a space:")
+        print("\nEnter the bit sequence separating the bits with a space:")
         bit_sequence = [int(i) for i in input().split()]
 
         option = int(input("0 - Quit \n1 - NRZ-I \n2 - NRZ-L \n3 - Pseudoternary\n4 - Manchester\n5 - Differential Manchester\n"))
