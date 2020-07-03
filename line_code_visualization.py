@@ -36,7 +36,26 @@ def nrz_l():
     visualize_line_code("NRZ-L", x_axis, y_axis)
 
 def pseudoternary():
-    pass
+    signal = 1
+    positivo = True
+    y_axis = [signal]
+    for bit in bit_sequence:
+        if bit == 1:
+            signal = 0
+            y_axis.append(signal)
+        elif bit == 0:
+            if positivo:
+                signal = 1
+                positivo = False
+            else:
+                signal = -1
+                positivo = True
+            y_axis.append(signal)
+
+    x_axis = np.arange(0, len(y_axis))
+
+    visualize_line_code("Pseudoternary", x_axis, y_axis)
+
 def manchester():
     pass
 def differential_manchester():
@@ -44,7 +63,7 @@ def differential_manchester():
 
 if __name__ == "__main__":    
     while True:
-        print("\nEnter the bit sequence separating the bits with a space:")
+        print("Enter the bit sequence separating the bits with a space:")
         bit_sequence = [int(i) for i in input().split()]
 
         option = int(input("0 - Quit \n1 - NRZ-I \n2 - NRZ-L \n3 - Pseudoternary\n4 - Manchester\n5 - Differential Manchester\n"))
