@@ -4,14 +4,16 @@ import matplotlib.pyplot as plt
 def visualize_line_code(line_code_name, x_axis, y_axis):
     # Set the marked values at axis x and y
     plt.yticks([-1, 0, 1])
-    plt.xticks(x_axis)
+    # Show only the integer values in x_axis
+    xticks_x_axis = x_axis[x_axis == x_axis.astype(int)] 
+    plt.xticks(xticks_x_axis)
 
     # Create the time line in the middle
     time_line = [0] * len(x_axis)
     plt.plot(x_axis, time_line, color="black", linewidth="0.5")
 
     # Create the vertical dashed lines for each bit
-    for i in x_axis:
+    for i in xticks_x_axis:
         dashed_line = [i] * len(y_axis)
         plt.plot(dashed_line, y_axis, dashes=[10, 15], color="black", linewidth="0.5")
 
@@ -84,7 +86,7 @@ def manchester():
             y_axis.append(-1)
 
             
-    x_axis = np.arange(0, len(y_axis))
+    x_axis = np.arange(start=0, stop=len(y_axis)/2, step=0.5)
 
     visualize_line_code("Manchester", x_axis, y_axis)
     
@@ -107,7 +109,7 @@ def differential_manchester():
 
             signal = -signal
             
-    x_axis = np.arange(0, len(y_axis))
+    x_axis = np.arange(start=0, stop=len(y_axis)/2, step=0.5)
 
     visualize_line_code("Differential Manchester", x_axis, y_axis)
 
