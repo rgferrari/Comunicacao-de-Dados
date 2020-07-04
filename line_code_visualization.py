@@ -74,12 +74,12 @@ def manchester():
 
     for bit in bit_sequence:
         if bit == 1:
+            y_axis.append(-1)
             y_axis.append(1)
-            y_axis.append(0)
 
         if bit == 0:
-            y_axis.append(0)
             y_axis.append(1)
+            y_axis.append(-1)
 
             
     x_axis = np.arange(0, len(bit_sequence)*2 + 1)
