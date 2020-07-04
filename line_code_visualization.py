@@ -111,24 +111,34 @@ def differential_manchester():
 
     visualize_line_code("Differential Manchester", x_axis, y_axis)
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
+    want_new_bit_sequence = True    
     while True:
-        print("Enter the bit sequence separating the bits with a space:")
-        bit_sequence = [int(i) for i in input().split()]
+        if want_new_bit_sequence:
+            print("\nEnter the bit sequence separating the bits with a space:")
+            bit_sequence = [int(i) for i in input().split()]
+            want_new_bit_sequence = False
 
-        option = int(input("0 - Quit \n1 - NRZ-I \n2 - NRZ-L \n3 - Pseudoternary\n4 - Manchester\n5 - Differential Manchester\n"))
+        option = int(input("\nChoose an option: \n0 - Quit \n1 - Enter a new bit sequence \n2 - NRZ-I \n3 - NRZ-L \n4 - Pseudoternary\n5 - Manchester\n6 - Differential Manchester\n"))
 
         if option == 0:
             quit()
         elif option == 1:
-            nrz_i()
+            want_new_bit_sequence = True
         elif option == 2:
-            nrz_l()
+            print("\nShowing visualization...")
+            nrz_i()
         elif option == 3:
-            pseudoternary()
+            print("\nShowing visualization...")
+            nrz_l()
         elif option == 4:
-            manchester()
+            print("\nShowing visualization...")
+            pseudoternary()
         elif option == 5:
+            print("\nShowing visualization...")
+            manchester()
+        elif option == 6:
+            print("\nShowing visualization...")
             differential_manchester()
         else:
-            print("Choose a valid option!\n")
+            print("\nChoose a valid option!")
