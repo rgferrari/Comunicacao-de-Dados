@@ -17,6 +17,8 @@ def visualize_line_code(line_code_name, x_axis, y_axis):
 
     plt.step(x_axis, y_axis, color="red")
     plt.title(line_code_name)
+    plt.xlabel("Time")
+    plt.ylabel("Level")
     plt.show()
 
 def nrz_i():
@@ -82,7 +84,7 @@ def manchester():
             y_axis.append(-1)
 
             
-    x_axis = np.arange(0, len(bit_sequence)*2 + 1)
+    x_axis = np.arange(0, len(y_axis))
 
     visualize_line_code("Manchester", x_axis, y_axis)
     
