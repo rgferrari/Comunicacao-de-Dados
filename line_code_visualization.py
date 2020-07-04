@@ -74,12 +74,12 @@ def manchester():
 
     for bit in bit_sequence:
         if bit == 1:
+            y_axis.append(-1)
             y_axis.append(1)
-            y_axis.append(0)
 
         if bit == 0:
-            y_axis.append(0)
             y_axis.append(1)
+            y_axis.append(-1)
 
             
     x_axis = np.arange(0, len(bit_sequence)*2 + 1)
@@ -87,7 +87,27 @@ def manchester():
     visualize_line_code("Manchester", x_axis, y_axis)
     
 def differential_manchester():
-    pass
+    signal = 1
+    y_axis = [signal]
+
+    for bit in bit_sequence:
+        if bit == 1:
+            y_axis.append(signal)
+            y_axis.append(-signal)
+
+            signal = -signal
+
+        if bit == 0:
+            signal = -signal
+
+            y_axis.append(signal)
+            y_axis.append(-signal)
+
+            signal = -signal
+            
+    x_axis = np.arange(0, len(y_axis))
+
+    visualize_line_code("Differential Manchester", x_axis, y_axis)
 
 if __name__ == "__main__":    
     while True:
