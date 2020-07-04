@@ -70,7 +70,22 @@ def pseudoternary():
     visualize_line_code("Pseudoternary", x_axis, y_axis)
 
 def manchester():
-    pass
+    y_axis = [1]
+
+    for bit in bit_sequence:
+        if bit == 1:
+            y_axis.append(1)
+            y_axis.append(0)
+
+        if bit == 0:
+            y_axis.append(0)
+            y_axis.append(1)
+
+            
+    x_axis = np.arange(0, len(bit_sequence)*2 + 1)
+
+    visualize_line_code("Manchester", x_axis, y_axis)
+    
 def differential_manchester():
     pass
 
