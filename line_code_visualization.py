@@ -1,15 +1,19 @@
+"""
+Members: René Gargano Ferrari, Artur Sendtko, Augusto Gai Dal'Asta, Leonarno Aita Militz.
+Insert the bit sequence with a space between the bits as in the example as follows:
+0 1 0 1 1 1 0 1 0 1
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-def visualize_line_code(line_code_name, x_axis, y_axis):
+def visualize_line_code(line_code_name, x_axis, y_axis, yticks):
     # Set the marked values at axis x and y
-    plt.yticks([-1, 0, 1])
+    plt.yticks(yticks)
     # Show only the integer values in x_axis
     xticks_x_axis = x_axis[x_axis == x_axis.astype(int)] 
     plt.xticks(xticks_x_axis)
 
-    # Create the time line in the middle
-    plt.axhline(0, linestyle="-", color="black", linewidth="0.5")
     # Create the vertical dashed lines for each bit
     plt.grid(axis="x", color="black", linestyle="--", linewidth="0.5", dashes=(6,6))
 
@@ -30,8 +34,11 @@ def nrz_i():
             y_axis.append(signal)
 
     x_axis = np.arange(0, len(y_axis))
+
+    # Create the time line in the middle
+    plt.axhline(0, linestyle="-", color="black", linewidth="0.5")
     
-    visualize_line_code("NRZ-I", x_axis, y_axis)
+    visualize_line_code("NRZ-I", x_axis, y_axis, [-1, 0, 1])
 
 def nrz_l():
     signal = 1
@@ -46,7 +53,10 @@ def nrz_l():
 
     x_axis = np.arange(0, len(y_axis))
 
-    visualize_line_code("NRZ-L", x_axis, y_axis)
+    # Create the time line in the middle
+    plt.axhline(0, linestyle="-", color="black", linewidth="0.5")
+
+    visualize_line_code("NRZ-L", x_axis, y_axis, [-1, 0, 1])
 
 def pseudoternary():
     signal = 1
@@ -67,24 +77,30 @@ def pseudoternary():
 
     x_axis = np.arange(0, len(y_axis))
 
-    visualize_line_code("Pseudoternary", x_axis, y_axis)
+    # Create the time line in the middle
+    plt.axhline(0, linestyle="-", color="black", linewidth="0.5")
+
+    visualize_line_code("Pseudoternary", x_axis, y_axis, [-1, 0, 1])
 
 def manchester():
     y_axis = [1]
 
     for bit in bit_sequence:
         if bit == 1:
-            y_axis.append(-1)
+            y_axis.append(0)
             y_axis.append(1)
 
         if bit == 0:
             y_axis.append(1)
-            y_axis.append(-1)
+            y_axis.append(0)
 
             
     x_axis = np.arange(start=0, stop=len(y_axis)/2, step=0.5)
 
-    visualize_line_code("Manchester", x_axis, y_axis)
+    # Create the time line in the middle
+    plt.axhline(0.5, linestyle="-", color="black", linewidth="0.5")
+
+    visualize_line_code("Manchester", x_axis, y_axis, [0, 1])
     
 def differential_manchester():
     signal = 1
@@ -93,21 +109,24 @@ def differential_manchester():
     for bit in bit_sequence:
         if bit == 1:
             y_axis.append(signal)
-            y_axis.append(-signal)
+            y_axis.append(1 - signal)
 
-            signal = -signal
+            signal = 1 - signal
 
         if bit == 0:
-            signal = -signal
+            signal = 1 - signal
 
             y_axis.append(signal)
-            y_axis.append(-signal)
+            y_axis.append(1 - signal)
 
-            signal = -signal
+            signal = 1 - signal
             
     x_axis = np.arange(start=0, stop=len(y_axis)/2, step=0.5)
 
-    visualize_line_code("Differential Manchester", x_axis, y_axis)
+    # Create the time line in the middle
+    plt.axhline(0.5, linestyle="-", color="black", linewidth="0.5")    
+
+    visualize_line_code("Differential Manchester", x_axis, y_axis, [0, 1])
 
 if __name__ == "__main__":
     want_new_bit_sequence = True    
