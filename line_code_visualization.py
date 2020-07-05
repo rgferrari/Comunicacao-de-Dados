@@ -9,13 +9,9 @@ def visualize_line_code(line_code_name, x_axis, y_axis):
     plt.xticks(xticks_x_axis)
 
     # Create the time line in the middle
-    time_line = [0] * len(x_axis)
-    plt.plot(x_axis, time_line, color="black", linewidth="0.5")
-
+    plt.axhline(0, linestyle="-", color="black", linewidth="0.5")
     # Create the vertical dashed lines for each bit
-    for i in xticks_x_axis:
-        dashed_line = [i] * len(y_axis)
-        plt.plot(dashed_line, y_axis, dashes=[10, 15], color="black", linewidth="0.5")
+    plt.grid(axis="x", color="black", linestyle="--", linewidth="0.5", dashes=(6,6))
 
     plt.step(x_axis, y_axis, color="red")
     plt.title(line_code_name)
