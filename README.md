@@ -1,2 +1,2 @@
-# Comunicacao-de-Dados-Trabalho1
+# Comunicacao de Dados
 Trabalhos da cadeira Comunicação de Dados.
