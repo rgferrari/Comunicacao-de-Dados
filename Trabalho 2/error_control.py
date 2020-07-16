@@ -72,8 +72,22 @@ def checksum16():
     for sequence in bit_sequence_list:
         binary_string_list.append(bit_to_string(sequence))
 
-    print(binary_string_list)
+    if(len(binary_string_list) > 1):
+        for i in range(len(binary_string_list)):
+            # Soma as duas primeiras strings
+            if i == 0:
+                summatory = add_binary_nums(binary_string_list[i], binary_string_list[i + 1])
+                i += 1
+            # Soma a string atual com o somatório existente
+            else:
+                summatory = add_binary_nums(summatory, binary_string_list[i])
+                
+            if len(summatory) > 16:
+                last_bit = summatory.pop(0)
+                summatory = add_binary_nums(summatory, last_bit)
 
+    #TODO complemento de 1 do somatorio
+    #Adicionar o complemento na bit_sequence_list
 
 if __name__ == "__main__":
     want_new_bit_sequence = True    
