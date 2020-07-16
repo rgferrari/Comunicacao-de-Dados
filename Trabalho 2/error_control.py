@@ -12,16 +12,8 @@ def bitSequenceValid():
     
     return True
 
-def twoDimParity():
-    pass
-
-def checksum16():
-    pass
-
+#cristiano ronaldo caralho
 def crc16():
-    pass
-
-def hamming():
     pass
 
 if __name__ == "__main__":
@@ -44,17 +36,11 @@ if __name__ == "__main__":
                 Choose an option: 
                 0 - Quit 
                 1 - Enter a new bit sequence 
-                2 - Two-dimensional parity-check
-                3 - Checksum 16-bits
-                4 - CRC-16: x^16 + x^12 + x^5 + 1
-                5 - Hamming
+                2 - CRC-16: x^16 + x^12 + x^5 + 1
                 """
             ))
 
             if   option == 0: quit()
             elif option == 1: want_new_bit_sequence = True
-            elif option == 2: twoDimParity()
-            elif option == 3: checksum16()
-            elif option == 4: crc16()
-            elif option == 5: hamming()
+            elif option == 2: crc16()
             else: print("\nChoose a valid option!")
