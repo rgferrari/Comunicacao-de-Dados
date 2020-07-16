@@ -33,16 +33,46 @@ def separate_bit_sequence():
     
     return bit_sequence_list
 
+def add_binary_nums(x, y): 
+        max_len = max(len(x), len(y)) 
+  
+        x = x.zfill(max_len) 
+        y = y.zfill(max_len) 
+          
+        # initialize the result 
+        result = '' 
+          
+        # initialize the carry 
+        carry = 0
+  
+        # Traverse the string 
+        for i in range(max_len - 1, -1, -1): 
+            r = carry 
+            r += 1 if x[i] == '1' else 0
+            r += 1 if y[i] == '1' else 0
+            result = ('1' if r % 2 == 1 else '0') + result 
+            carry = 0 if r < 2 else 1     # Compute the carry. 
+          
+        if carry !=0 : result = '1' + result 
+  
+        return result.zfill(max_len) 
+
+def bit_to_string(bit_seq):
+    string = ''
+    for bit in bit_seq:
+        string = string + (str(bit))
+    
+    return string
 
 def checksum16():
     fix_bit_sequence()
     bit_sequence_list = separate_bit_sequence()
+        
+    binary_string_list = []
+    for sequence in bit_sequence_list:
+        binary_string_list.append(bit_to_string(sequence))
 
-    stringList = ''.join([str(item) for item in bit_sequence_list[0]])
-
-    binaryList = ''.join(format(ord(item), 'b') for item in stringList)
-
-    print(binaryList)
+    print(binary_string_list)
 
 
 if __name__ == "__main__":
