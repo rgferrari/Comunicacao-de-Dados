@@ -67,11 +67,6 @@ def ones_complement(bit_string):
     
     return complement
 
-def bits_to_word(bin_data):
-    result = 'fazer'
-    
-    return result 
-
 def reverse_eng_info(bit_string_list):
 
     size_check = []
@@ -82,7 +77,6 @@ def reverse_eng_info(bit_string_list):
         total_size += len(sequence)
 
     print("\nSequences sizes: " + str(size_check))
-    print("Initial Word: " + bits_to_word('101010'))
     print("Total size: " + str(total_size))
 
 
@@ -121,8 +115,8 @@ Select an input option:
 """
             ))
         
-        if   input_option == 0: return 0
-        elif input_option == 1: return 1
+        if   input_option == 0: string_input_menu()
+        elif input_option == 1: binary_input_menu()
         else: print("\nChoose a valid option!") 
 
 def binary_input_menu():
@@ -130,7 +124,7 @@ def binary_input_menu():
     
     while True:
         if want_new_bit_sequence: 
-            bit_sequence = input("\nEnter the bit sequence to operate.\n >> ")
+            bit_sequence = input("\nEnter the bit sequence to operate. \n>> ")
             
             if (bit_sequence_valid(bit_sequence)):
                 want_new_bit_sequence = False
@@ -139,10 +133,10 @@ def binary_input_menu():
                 want_new_bit_sequence = True
 
         if want_new_bit_sequence == False:
-            option = int(input("\nChoose an option: \n0 - Quit \n1 - Enter a new bit sequence \n2 - Checksum 16\n"))
+            option = int(input("\nChoose an option: \n0 - Quit \n1 - Enter a new input \n2 - Checksum 16\n"))
 
             if   option == 0: quit()
-            elif option == 1: want_new_bit_sequence = True
+            elif option == 1: return
             elif option == 2:
                 print("\n", checksum16(bit_sequence), sep="")
                 input("\nPress 'Enter' to continue...")
@@ -153,25 +147,21 @@ def string_input_menu():
     
     while True:  
         if want_new_bit_sequence: 
-            user_input = input("\nEnter the string to operate.\n >> ")
+            user_input = input("\nEnter the string to operate. \n>> ")
             bit_sequence = ''.join(format(ord(x), 'b') for x in user_input)
             print("\nYour string in binary values:\n" + bit_sequence + "\nBinary String Size: " + str(len(bit_sequence)))
             
             want_new_bit_sequence = False
 
         if want_new_bit_sequence == False:
-            option = int(input("\nChoose an option: \n0 - Quit \n1 - Enter a new string \n2 - Checksum 16\n"))
+            option = int(input("\nChoose an option: \n0 - Quit \n1 - Enter a new input \n2 - Checksum 16\n"))
 
             if   option == 0: quit()
-            elif option == 1: want_new_bit_sequence = True
+            elif option == 1: return
             elif option == 2:
                 print("\n", checksum16(bit_sequence), sep="")
                 input("\nPress 'Enter' to continue...")
             else: print("\nChoose a valid option!")
 
-2
 if __name__ == "__main__":
-    input_option = input_type_menu()
-
-    if   input_option == 0: string_input_menu()
-    elif input_option == 1: binary_input_menu()
+    input_type_menu()
