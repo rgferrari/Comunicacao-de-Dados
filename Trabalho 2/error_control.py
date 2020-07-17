@@ -2,9 +2,8 @@
 Members: René Gargano Ferrari, Artur Sendtko, Augusto Gai Dal'Asta, 
          Leonarno Aita de Oliveira Militz.
 """
-import numpy as np
 
-def bit_sequence_valid(bit_seq):
+def is_bit_sequence_valid(bit_seq):
     for bit in bit_seq:
         if bit != '0' and bit != '1':
             return False
@@ -126,7 +125,7 @@ def binary_input_menu():
         if want_new_bit_sequence: 
             bit_sequence = input("\nEnter the bit sequence to operate. \n>> ")
             
-            if (bit_sequence_valid(bit_sequence)):
+            if (is_bit_sequence_valid(bit_sequence)):
                 want_new_bit_sequence = False
             else:
                 print("\nnot a bit sequence.")
