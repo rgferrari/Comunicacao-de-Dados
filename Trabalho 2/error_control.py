@@ -4,7 +4,6 @@ Insert the bit sequence with a space between the bits as in the example as follo
 0 1 0 1 1 1 0 1 0 1
 """
 import numpy as np
-import math
 
 def bitSequenceValid():
     for bit in bit_sequence:
@@ -64,6 +63,17 @@ def bit_to_string(bit_seq):
     
     return string
 
+def ones_complement(bit_string):
+    complement = ''
+    for bit in bit_string:
+        if bit == '0':
+            complement += '1'
+        if bit == '1':
+            complement += '0'
+    
+    return complement
+
+
 def checksum16():
     fix_bit_sequence()
     bit_sequence_list = separate_bit_sequence()
@@ -72,22 +82,25 @@ def checksum16():
     for sequence in bit_sequence_list:
         binary_string_list.append(bit_to_string(sequence))
 
-    if(len(binary_string_list) > 1):
-        for i in range(len(binary_string_list)):
-            # Soma as duas primeiras strings
-            if i == 0:
-                summatory = add_binary_nums(binary_string_list[i], binary_string_list[i + 1])
-                i += 1
-            # Soma a string atual com o somatório existente
-            else:
-                summatory = add_binary_nums(summatory, binary_string_list[i])
-                
+    
+    summatory = binary_string_list[0]
+
+    if len(binary_string_list) >= 2:
+        for i in range(1, len(binary_string_list)):
+
+            summatory = add_binary_nums(summatory, binary_string_list[i])
+
             if len(summatory) > 16:
-                last_bit = summatory.pop(0)
+                last_bit = summatory[0]
+                summatory = summatory[1:]
                 summatory = add_binary_nums(summatory, last_bit)
 
-    #TODO complemento de 1 do somatorio
-    #Adicionar o complemento na bit_sequence_list
+    summatory = ones_complement(summatory)
+
+    binary_string_list.append(summatory)
+
+    return binary_string_list
+
 
 if __name__ == "__main__":
     want_new_bit_sequence = True    
@@ -104,16 +117,11 @@ if __name__ == "__main__":
                 want_new_bit_sequence = True
 
         if want_new_bit_sequence == False:
-            option = int(input(
-                """
-Choose an option: 
-0 - Quit 
-1 - Enter a new bit sequence 
-2 - Checksum 16
-"""
-            ))
+            option = int(input("\nChoose an option: \n0 - Quit \n1 - Enter a new bit sequence \n2 - Checksum 16\n"))
 
             if   option == 0: quit()
             elif option == 1: want_new_bit_sequence = True
-            elif option == 2: checksum16()
+            elif option == 2:
+                print("\n", checksum16(), sep="")
+                input("\nPress 'Enter' to continue...")
             else: print("\nChoose a valid option!")
