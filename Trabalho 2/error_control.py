@@ -1,33 +1,34 @@
 """
-Members: René Gargano Ferrari, Artur Sendtko, Augusto Gai Dal'Asta, Leonarno Aita Militz.
-Insert the bit sequence with a space between the bits as in the example as follows:
-0 1 0 1 1 1 0 1 0 1
+Members: René Gargano Ferrari, Artur Sendtko, Augusto Gai Dal'Asta, 
+         Leonarno Aita de Oliveira Militz.
 """
 import numpy as np
 
-def bitSequenceValid():
-    for bit in bit_sequence:
-        if bit != 0 and bit != 1:
+def bit_sequence_valid(bit_seq):
+    for bit in bit_seq:
+        if bit != '0' and bit != '1':
             return False
     
     return True
 
-def fix_bit_sequence():
-    modulo = len(bit_sequence) % 16
+def fix_bit_sequence(bit_seq):
+    modulo = len(bit_seq) % 16
 
     while modulo != 0:
-        bit_sequence.insert(0, 0)
-        modulo = len(bit_sequence) % 16
+        bit_seq = '0' + bit_seq
+        modulo = len(bit_seq) % 16
+    
+    return bit_seq
         
 
-def separate_bit_sequence():
-    n_arrays = int(len(bit_sequence) / 16)
+def separate_bit_sequence(bit_seq):
+    n_arrays = int(len(bit_seq) / 16)
 
     bit_sequence_list = []
     iterator = 16
     for i in range(n_arrays):
         begin = iterator - 16
-        bit_sequence_list.append(bit_sequence[begin:iterator])
+        bit_sequence_list.append(bit_seq[begin:iterator])
         iterator += 16
     
     return bit_sequence_list
@@ -56,13 +57,6 @@ def add_binary_nums(x, y):
 
     return result.zfill(max_len) 
 
-def bit_to_string(bit_seq):
-    string = ''
-    for bit in bit_seq:
-        string = string + (str(bit))
-    
-    return string
-
 def ones_complement(bit_string):
     complement = ''
     for bit in bit_string:
@@ -73,22 +67,35 @@ def ones_complement(bit_string):
     
     return complement
 
-
-def checksum16():
-    fix_bit_sequence()
-    bit_sequence_list = separate_bit_sequence()
-        
-    binary_string_list = []
-    for sequence in bit_sequence_list:
-        binary_string_list.append(bit_to_string(sequence))
-
+def bits_to_word(bin_data):
+    result = 'fazer'
     
-    summatory = binary_string_list[0]
+    return result 
 
-    if len(binary_string_list) >= 2:
-        for i in range(1, len(binary_string_list)):
+def reverse_eng_info(bit_string_list):
 
-            summatory = add_binary_nums(summatory, binary_string_list[i])
+    size_check = []
+    total_size  = 0
+
+    for sequence in bit_string_list:
+        size_check.append(len(sequence))
+        total_size += len(sequence)
+
+    print("\nSequences sizes: " + str(size_check))
+    print("Initial Word: " + bits_to_word('101010'))
+    print("Total size: " + str(total_size))
+
+
+def checksum16(bit_sequence):
+    bit_sequence = fix_bit_sequence(bit_sequence)
+    bit_sequence_list = separate_bit_sequence(bit_sequence)
+    
+    summatory = bit_sequence_list[0]
+
+    if len(bit_sequence_list) >= 2:
+        for i in range(1, len(bit_sequence_list)):
+
+            summatory = add_binary_nums(summatory, bit_sequence_list[i])
 
             if len(summatory) > 16:
                 last_bit = summatory[0]
@@ -96,21 +103,36 @@ def checksum16():
                 summatory = add_binary_nums(summatory, last_bit)
 
     summatory = ones_complement(summatory)
+    bit_sequence_list.append(summatory)
+    reverse_eng_info(bit_sequence_list)
 
-    binary_string_list.append(summatory)
-
-    return binary_string_list
+    return bit_sequence_list
 
 
-if __name__ == "__main__":
-    want_new_bit_sequence = True    
+def input_type_menu():
+    while True:
+        input_option = int(input(
+"""
+Select an input option:
+
+0. String (ex: "Hello World")
+1. Binary Sequence (ex: "101010110111001")
+
+"""
+            ))
+        
+        if   input_option == 0: return 0
+        elif input_option == 1: return 1
+        else: print("\nChoose a valid option!") 
+
+def binary_input_menu():
+    want_new_bit_sequence = True
     
-    while True:  
-        if want_new_bit_sequence:
-            print("\nEnter the bit sequence separating the bits with a space:")
-            bit_sequence = [int(i) for i in input().split()]
+    while True:
+        if want_new_bit_sequence: 
+            bit_sequence = input("\nEnter the bit sequence to operate.\n >> ")
             
-            if (bitSequenceValid()):
+            if (bit_sequence_valid(bit_sequence)):
                 want_new_bit_sequence = False
             else:
                 print("\nnot a bit sequence.")
@@ -122,6 +144,34 @@ if __name__ == "__main__":
             if   option == 0: quit()
             elif option == 1: want_new_bit_sequence = True
             elif option == 2:
-                print("\n", checksum16(), sep="")
+                print("\n", checksum16(bit_sequence), sep="")
                 input("\nPress 'Enter' to continue...")
             else: print("\nChoose a valid option!")
+
+def string_input_menu():
+    want_new_bit_sequence = True
+    
+    while True:  
+        if want_new_bit_sequence: 
+            user_input = input("\nEnter the string to operate.\n >> ")
+            bit_sequence = ''.join(format(ord(x), 'b') for x in user_input)
+            print("\nYour string in binary values:\n" + bit_sequence + "\nBinary String Size: " + str(len(bit_sequence)))
+            
+            want_new_bit_sequence = False
+
+        if want_new_bit_sequence == False:
+            option = int(input("\nChoose an option: \n0 - Quit \n1 - Enter a new string \n2 - Checksum 16\n"))
+
+            if   option == 0: quit()
+            elif option == 1: want_new_bit_sequence = True
+            elif option == 2:
+                print("\n", checksum16(bit_sequence), sep="")
+                input("\nPress 'Enter' to continue...")
+            else: print("\nChoose a valid option!")
+
+2
+if __name__ == "__main__":
+    input_option = input_type_menu()
+
+    if   input_option == 0: string_input_menu()
+    elif input_option == 1: binary_input_menu()
